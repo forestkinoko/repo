@@ -1,5 +1,18 @@
 # Eventhub
 
+## Create Eventhub
+```
+# Set  variables.
+my_resource_group=RESOURCEGROUPNAME
+my_namespace=EVENTHUBNAMESPACE
+
+# Create Namespace
+az eventhubs namespace create --resource-group $my_resource_group --name $my_namespace --location japaneast --sku Basic --maximum-throughput-units 1
+
+# Create Eventhub, for Syslog
+az eventhubs eventhub create --resource-group $my_resource_group --namespace-name $my_namespace --name syslog --message-retention 1 --partition-count 4
+```
+
 ## Linux Diagnostic Extension (LAD) 4.0 Install
 [Document](https://docs.microsoft.com/ja-jp/azure/virtual-machines/extensions/diagnostics-linux?tabs=azcli)
 ```
