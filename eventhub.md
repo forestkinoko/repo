@@ -37,8 +37,8 @@ eventhub_saskey=$(az eventhubs namespace authorization-rule keys list --resource
 echo "get_sas_token '$my_namespace.servicebus.windows.net/syslog' 'RootManageSharedAccessKey' '$eventhub_saskey'" >> get_sas_token.sh
 eventhub_sastoken=$(bash get_sas_token.sh | awk '{print $2}')
 eventhub_sasurl=$(echo "https://$my_namespace.servicebus.windows.net/syslog?$eventhub_sastoken")
-vim protected_settings.json
-replace URL
+sed -i "s#__SASURL__#"$eventhub_sasurl"#g" protected_settings.json
+sed -i "s#__SASURL__#\&#g" protected_settings.json
 
 # install and enable the extension.
 az vm extension set --publisher Microsoft.Azure.Diagnostics --name LinuxDiagnostic --version 4.0 --resource-group $my_resource_group --vm-name $my_linux_vm --protected-settings protected_settings.json --settings public_settings_metric_none.json
