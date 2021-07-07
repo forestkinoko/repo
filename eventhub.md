@@ -31,6 +31,7 @@ sed -i "s#__VM_RESOURCE_ID__#$my_vm_resource_id#g" public_settings_metric_none.j
 my_diagnostic_storage_account_sastoken=$(az storage account generate-sas --account-name $my_diagnostic_storage_account --expiry 2037-12-31T23:59:00Z --permissions wlacu --resource-types co --services bt -o tsv)
 sed -i "s#__DIAGNOSTIC_STORAGE_ACCOUNT__#$my_diagnostic_storage_account#g" protected_settings.json
 sed -i "s#__DIAGNOSTIC_STORAGE_ACCOUNT_SASTOKEN__#$my_diagnostic_storage_account_sastoken#g" protected_settings.json
+sed -i "s#__DIAGNOSTIC_STORAGE_ACCOUNT_SASTOKEN__#\&#g" protected_settings.json
 
 # Build the protected settings (eventhub SAS url)
 eventhub_saskey=$(az eventhubs namespace authorization-rule keys list --resource-group rin-rg-prd --namespace-name rinnamespace --name RootManageSharedAccessKey -o tsv | awk '{print $5}')
